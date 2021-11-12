@@ -26,13 +26,13 @@ const PORT = process.env.PORT || 4001;
 app.use('/public', express.static(__dirname + '/../storage/imgs/'))
 
 // Rutas 
-app.use('/', require('./Routes/Routes'))
+app.use('/api', require('./Routes/Routes'))
 
 
 app.listen(PORT, () => {
 
   //Informo dode esta corriendo el localhost
-  console.log(`La App esta corriendo en el puerto: http://localhost:${PORT}`);
+  console.log(`La App esta corriendo en el puerto: http://localhost:${PORT}/api`);
 
   sequelize.authenticate().then(() => {
     console.log('Estoy conectado a la base de datos')
@@ -40,5 +40,13 @@ app.listen(PORT, () => {
     .catch(err => {
     console.log(err);
   })
+
+  // sequelize.sync({ force: true })
+  //   .then(() => {
+  //     console.log('Estoy conectado a la base de datos');
+  //   })
+  //   .catch(error => {
+  //     console.log(error)
+  //   });
 
 });
