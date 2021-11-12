@@ -18,13 +18,9 @@ function setImgUrl(filename) {
 
 module.exports = {
 
-    //**LOGIN */
-   async login(req,res){
-    
-    },
-    
     //**REGISTRO */
     async register(req, res) {
+        console.log(req.body)
 
         let img;
 
@@ -35,8 +31,8 @@ module.exports = {
         if (req.file) {
             img = setImgUrl(req.file.filename)
         };
-        
-        users.create({
+
+        await users.create({
             //CREO EL USUARIO
             username: req.body.username,
             firts_name: req.body.firts_name,
@@ -46,22 +42,75 @@ module.exports = {
             phone: req.body.phone,
             email: req.body.email,
             image: img,
-            password: password,           
-      }).then(user => {
-                let token = jwt.sign({
-                    user: user
-                },
-                    auth.secret,
-                    {
-                        expiresIn: auth.expires
-                    })
-                res.json({
-                    user:user,
-                    token:token})
+            password: password,
+        }).then(user => {
+            let token = jwt.sign({
+                user: user
+            },
+                auth.secret,
+                {
+                    expiresIn: auth.expires
+                })
+            res.json({
+                user: user,
+                token: token
             })
-            .catch(err => {
-            console.log(err)
         })
+            .catch(err => {
+                res.status(500).json(err)
+            })
+    },
+
+    //**LOGIN */
+    async login(req, res) {
+
+        console.log(req.body)
+        //** recibo los datos para loguearse */
+        let { email, password } = req.body;
+
+        //** hago la consdulta a la db */
+        await users.findOne({ email: email }).then(user => {
+            //** si no hay usuario retorno 404 */
+            if (!user) {
+                return res.status(404).json({ mensage: 'Correo invalido' })
+            } else {
+
+                //** si hay usuario conparo password */
+                if (bcrypt.compareSync(password, user.password)) {
+
+                    //** si es correcta creo un token */
+                    let token = jwt.sign({ user: user }, auth.secret, { expiresIn: auth.expires })
+
+                    res.json({
+                        user: user,
+                        token: token
+                    })
+
+                } else {
+                    //** si el password es incorrecto */
+                    res.status(401).json({ mensage: 'Contraseña incorrecta' })
+                }
+            }
+
+        }).catch(err => {
+            //** si hay error */
+            res.status(500).json({ error: err })
+        })
+    },
+
+
+    //** LISTAR USUARIOS */
+    async toList(req, res) {
+
+        await users.findAll().then(users => {
+        
+            res.json(users);
+
+        }).catch(err => {
+
+            res.status(500).json({ error: err })
+            
+    })
 },
 }
 

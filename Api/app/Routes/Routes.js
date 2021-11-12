@@ -10,8 +10,9 @@ const upload = require('../../libs/storage');
 
 // Creo las rutas
 //** RUTAS DE USUARIOS */
-router.post('/login', Controller.login);
 router.post('/register', upload.single('image'), Controller.register);
+router.post('/login', Controller.login);
+router.get('/users', Controller.toList)
 
 
 

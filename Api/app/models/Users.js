@@ -4,11 +4,7 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class users extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of DataTypes lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+    
     static associate(models) {
       // define association here
     }
@@ -20,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       validate: {
         notNull: {
-          msg: 'Este nobre de usuario ya existe'
+          msg: 'Este nombre de usuario ya existe'
         }
       }
     },
@@ -30,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isAlpha: {
           msg:'El nombre solo puede contener letras'
+        },
+        len: {
+          args: [2, 255],
+          msg:"El nombre debe tener minimo 2 caracteres"
         }
       }
     },
@@ -37,7 +37,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         isAlpha: {
-          msg: 'El nombre solo puede contener letras'
+          msg: "El Apellido solo puede contener letras"
+        },
+        len: {
+          args: [2, 255],
+          msg: 'El Nombre debe tener minimo 2 caracteres'
         }
       }
     },
@@ -47,6 +51,10 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isAlpha: {
           msg: 'El nombre solo puede contener letras'
+        },
+        len: {
+          args: [2, 255],
+          msg: 'El Apellido debe tener minimo 2 caracteres'
         }
       }
     },
@@ -55,16 +63,31 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isAlpha: {
           msg: 'El nombre solo puede contener letras'
+        },
+        len: {
+          args: [2, 255],
+          msg: 'El Apellido debe tener minimo 2 caracteres'
         }
       }
     },
     phone: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          args: [10, 255],
+          msg: 'El Numero debe tener minimo 10 digitos'
+        }
+      }
     },
     email: {
       type: DataTypes.STRING,
       unique: true,
       allowNull: false,
+      validate: {
+        isEmail: {
+          msg: 'El Email debe ser valido'
+        }
+      }
     },
     image: {
       type: DataTypes.STRING
@@ -72,7 +95,14 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        len: {
+          args: [10, 255],
+          msg: 'La contraseña debe tener minimo 10 caracteres'
+        }
+      }
     },
+   
   }, {
     sequelize,
     modelName: 'users',
