@@ -109,5 +109,14 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'users',
   });
+
+  //** VERIFICO EL ROL DEL USUARIO */
+  
+  users.isAdmin = function (roles) {
+    let tmp = [];
+    roles.forEach(role => tmp.push(role.role));
+    
+    return tmp.includes('admin')
+  }
   return users;
 };

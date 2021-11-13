@@ -111,6 +111,29 @@ module.exports = {
             res.status(500).json({ error: err })
             
     })
-},
+    },
+    
+    //** LISTAR USUARIOS POR ID*/
+    async byIdUser(req, res) {
+
+        let user = await users.findByPk(req.params.id)
+
+        if (!user) {
+            res.status(500).json({ error:'Usuario no encontrado'})
+        } else {
+            res.json(user);
+        }
+    },
 }
 
+
+// let post = await posts.findByPk(req.params.id);
+
+// if (!post) {
+
+//     res.status(404).json({ message: 'Post no se encontrado' });
+
+// } else {
+//     res.json(post)
+
+// }

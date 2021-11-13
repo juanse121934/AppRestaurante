@@ -3,8 +3,11 @@ const express = require(`express`);
 const router = express.Router();
 const Controller = require('../Controllers');
 
-//** MIDDLEWARES */
+//** MIDDLEWARES PARA COMPROBACION DE TOKEN*/
 const auth = require('../Middlewares/Auth')
+
+//** POLITICAS  */
+const Polices= require('../policies')
 
 //Importo el metodo para el manejo de imagenes
 const upload = require('../../libs/storage');
@@ -19,13 +22,14 @@ router.get('/', Controller.home);
 router.post('/register', upload.single('image'), Controller.register);
 router.post('/login', Controller.login);
 router.get('/users', Controller.toListUsers);
+router.get('/users/:id', Controller.byIdUser);
 
 //** RUTAS POSTS */
 router.post('/posts', Controller.createPosts);
-router.get('/posts', auth, Controller.toListPosts);
-router.get('/posts/:id', auth, Controller.byIdPost);
-router.patch('/posts/:id', auth, Controller.updatePost);
-router.delete('/posts/:id', auth, Controller.deletePost);
+router.get('/posts', Controller.toListPosts);
+router.get('/posts/:id', Controller.byIdPost);
+router.patch('/posts/:id', auth, Controller.findPost, Polices.postUpdate ,Controller.updatePost);
+router.delete('/posts/:id', auth, Controller.findPost, Polices.deletePost, Controller.deletePost);
 
 
 

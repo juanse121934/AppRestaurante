@@ -1,13 +1,16 @@
-const User = require('./UserController');
+const Users = require('./UserController');
 const Home = require('./HomeController');
 const Posts = require('./PostsController');
 
 
 module.exports = {
     home: Home.all,
-    register: User.register,
-    login: User.login,
-    toListUsers: User.toList,
+
+    //** RUTAS USERS */
+    register: Users.register,
+    login: Users.login,
+    toListUsers: Users.toList,
+    byIdUser:Users.byIdUser,
 
     //** RUTAS POSTS */
     createPosts: Posts.create,
@@ -15,6 +18,7 @@ module.exports = {
     byIdPost: Posts.byIdPost,
     updatePost: Posts.updatePost,
     deletePost: Posts.deletePost,
+    findPost: Posts.findPost,
     
 }
 
