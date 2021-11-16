@@ -7,12 +7,28 @@ module.exports = (sequelize, DataTypes) => {
     
     static associate(models) {
       // define association here
-     this.belongsTo(models.users, {as:'autor', foreignKey:'userId'})
+     this.belongsTo(models.users, {as:'autor', foreignKey:'user_id'})
     }
   };
   posts.init({
-    title: DataTypes.STRING,
-    body: DataTypes.TEXT
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'El post debe tener un titulo'
+        }
+      }
+    },
+    body: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'El post debe tener un mensaje'
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'posts',

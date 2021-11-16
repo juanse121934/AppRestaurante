@@ -5,25 +5,26 @@ module.exports = {
 
   async all(req, res) {
     let Home = {
-      Saludo: 'Hola Mundo',
-      Rutas: {
-        Usuarios: {
-          Registro: `http://localhost:4000/api/register`,
-          Ver_Usuarios: {
-            todos: `http://localhost:4000/api/users`,
-            Por_Id: `http://localhost:4000/api/users/:id`,
+      Gretting: 'Hello World',
+      Routes: {
+        Users: {
+          Register_post: `http://localhost:4000/api/users/register`,
+          Login_post: `http://localhost:4000/api/users/login`,
+          View_Users_get: {
+            All: `http://localhost:4000/api/users`,
+            By_Id: `http://localhost:4000/api/users/:id`,
           },
-          Actualizar_Usuario_Put: `http://localhost:4000/api/users/put/:id`,
-          Eliminar_Usuario: `http://localhost:4000/api/users/del/:id`,
+          Update_User_patch: `http://localhost:4000/api/users/:id`,
+          Delete_User_delet: `http://localhost:4000/api/users/:id`,
         },
-        Rutas_Posts: {
-          Crear_Post: `http://localhost:4000/api/posts`,
-          Ver_Posts: {
-            todos: `http://localhost:4000/api/posts`,
-            Por_Id: `http://localhost:4000/api/posts/:id`,
+        Posts: {
+          Create_Post: `http://localhost:4000/api/posts`,
+          View_Posts: {
+            All: `http://localhost:4000/api/posts`,
+            By_Id: `http://localhost:4000/api/posts/:id`,
           },
-          Actualizar_Posts_Put: `http://localhost:4000/api/posts/put/:id`,
-          Eliminar_Posts: `http://localhost:4000/api/posts/del/:id`,
+          Update_Posts_patch: `http://localhost:4000/api/posts/:id`,
+          Delete_Posts_delete: `http://localhost:4000/api/posts/:id`,
         },
         Rutas_Recetas: {
           Crear_Receta: `http://localhost:4000/api/recipes`,

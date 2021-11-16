@@ -10,7 +10,9 @@ module.exports = {
     register: Users.register,
     login: Users.login,
     toListUsers: Users.toList,
-    byIdUser:Users.byIdUser,
+    byIdUser: Users.byIdUser,
+    updateUser: Users.updateUser,
+    deleteUser: Users.deleteUser,
 
     //** RUTAS POSTS */
     createPosts: Posts.create,

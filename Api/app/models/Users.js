@@ -7,7 +7,9 @@ module.exports = (sequelize, DataTypes) => {
     
     static associate(models) {
       // define association here
-      this.hasMany(models.posts, { as: "posts", foreignKey: 'userId' });
+      this.hasMany(models.posts, { as: "posts", foreignKey: 'user_id' });
+      this.hasMany(models.postres, { as: "postres", foreignKey: 'user_id' });
+      this.hasMany(models.platos, { as: "platos", foreignKey: 'user_id' });
       this.belongsToMany(models.roles, { as: "roles", foreignKey:'user_id',through:'roles_users'})
     }
   };

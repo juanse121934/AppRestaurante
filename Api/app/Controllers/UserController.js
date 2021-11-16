@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 
 //** IMPORTO EL MODELO DE USUARIO */
 const { users } = require('../models');
+const { roles, posts, postres, platos } = require('../models')
 const auth = require('../../config/auth');
 
 
@@ -20,7 +21,7 @@ module.exports = {
 
     //**REGISTRO */
     async register(req, res) {
-        console.log(req.body)
+
 
         let img;
 
@@ -63,8 +64,6 @@ module.exports = {
 
     //**LOGIN */
     async login(req, res) {
-
-        console.log(req.body)
         //** recibo los datos para loguearse */
         let { email, password } = req.body;
 
@@ -75,7 +74,7 @@ module.exports = {
                 return res.status(404).json({ mensage: 'Correo invalido' })
             } else {
 
-                //** si hay usuario conparo password */
+                //** si hay usuario comparo password */
                 if (bcrypt.compareSync(password, user.password)) {
 
                     //** si es correcta creo un token */
@@ -102,16 +101,35 @@ module.exports = {
     //** LISTAR USUARIOS */
     async toList(req, res) {
 
-        await users.findAll().then(users => {
-        
+        await users.findAll({
+            include: [{
+                model: roles,
+                as: 'roles',
+                attributes:['id','role']
+            }, {
+                model: posts,
+                as: 'posts',
+               attributes: ['id', 'title']
+                }, {
+                    model: postres,
+                    as: 'postres',
+                    attributes: ['id', 'name']
+                }, {
+                    model: platos,
+                    as: 'platos',
+                    attributes: ['id', 'name']
+                }]
+        }).then(users => {
+
             res.json(users);
 
         }).catch(err => {
 
             res.status(500).json({ error: err })
-            
-    })
+
+        })
     },
+
     
     //** LISTAR USUARIOS POR ID*/
     async byIdUser(req, res) {
@@ -119,21 +137,51 @@ module.exports = {
         let user = await users.findByPk(req.params.id)
 
         if (!user) {
-            res.status(500).json({ error:'Usuario no encontrado'})
+            res.status(500).json({ error: 'Usuario no encontrado' })
         } else {
             res.json(user);
         }
     },
+
+    //** ACTUALIZAR USER*/
+
+    async updateUser(req, res) {
+
+        let img;
+
+        //ENCRIPTO EL PASSWORD
+        let password = req.body.password;
+        if (req.params.password) {
+           password = bcrypt.hashSync(req.body.password, Number.parseInt(auth.rounds));
+        }
+
+        //console.log(req.file.filename)
+        if (req.file) {
+            img = setImgUrl(req.file.filename)
+        };
+
+        req.user.username = req.body.username,
+        req.user.firts_name = req.body.firts_name,
+        req.user.second_name = req.body.second_name,
+        req.user.surname = req.body.surname,
+        req.user.second_surname = req.body.second_surname,
+        req.user.phone = req.body.phone,
+        req.user.email = req.body.email,
+        req.user.image = img,
+        req.user.password = password,
+
+
+            req.user.save().then(user => {
+                res.json(user)
+            })
+
+    },
+
+    //** ELIMINAR USUARIOS POR ID*/
+    async deleteUser(req, res) {
+
+        req.user.destroy().then(result => {
+            res.json({ result, mensage: 'Usuario eliminado' })
+        })
+    },
 }
-
-
-// let post = await posts.findByPk(req.params.id);
-
-// if (!post) {
-
-//     res.status(404).json({ message: 'Post no se encontrado' });
-
-// } else {
-//     res.json(post)
-
-// }

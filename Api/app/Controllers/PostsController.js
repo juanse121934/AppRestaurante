@@ -1,4 +1,5 @@
 const { posts } = require('../models')
+const {users} = require('../models')
 
 module.exports = {
 
@@ -20,10 +21,11 @@ module.exports = {
 
     //** CREAR POSTS */
     async create(req, res) {
-
+        
         await posts.create({
             title: req.body.title,
-            body: req.body.body
+            body: req.body.body,
+            userId: req.user.id,
         })
             .then(post => {
 
@@ -38,7 +40,13 @@ module.exports = {
 
     async allPosts(req, res) {
 
-        await posts.findAll()
+        await posts.findAll({
+            include: [{
+                model: users,
+                as: 'autor',
+                attributes: ['id','username','email']
+            }]
+        })
             .then(posts => {
 
                 res.json(posts)
