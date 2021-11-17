@@ -7,6 +7,10 @@ module.exports = (sequelize, DataTypes) => {
     
     static associate(models) {
       // define association here
+      this.hasMany(models.posts, { as: "Posts", foreignKey: 'user_id' });
+      this.hasMany(models.postres, { as: "Postres", foreignKey: 'user_id' });
+      this.hasMany(models.platos, { as: "Platos", foreignKey: 'user_id' });
+      this.belongsToMany(models.roles, { as: "Roles", foreignKey:'user_id',through:'roles_users'})
     }
   };
   users.init({
@@ -97,7 +101,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         len: {
-          args: [10, 255],
+          args: [8, 255],
           msg: 'La contraseña debe tener minimo 10 caracteres'
         }
       }
@@ -107,5 +111,14 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'users',
   });
+
+  //** VERIFICO EL ROL DEL USUARIO */
+  
+  users.isAdmin = function (roles) {
+    let tmp = [];
+    roles.forEach(role => tmp.push(role.role));
+    
+    return tmp.includes('admin')
+  }
   return users;
 };

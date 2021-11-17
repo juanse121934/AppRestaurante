@@ -1,47 +1,40 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('users', {
+    await queryInterface.createTable('platos', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      username: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
       },
-      firts_name: {
+      description: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      second_name: {
-        type: Sequelize.STRING
-      },
-      surname: {
-        type: Sequelize.STRING,
-        allowNull: false,   
-      },
-      second_surname: {
-        type: Sequelize.STRING
-      },
-      phone: {
-        type: Sequelize.STRING
-      },
-      email: {
-        type: Sequelize.STRING,
-        unique: true,
-        allowNull: false,        
+      precio: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       image: {
-        type: Sequelize.STRING
-      },
-      password: {
         type: Sequelize.STRING,
         allowNull: false,
-        len:[8, 255],
+      },
+      punctuation: {
+        type: Sequelize.DECIMAL
+      },
+      user_id: {
+        type: Sequelize.INTEGER,
+        reference: {
+          model: "users",
+          key: "id"
+        },
+        onDelete: "CASCADE"
       },
       createdAt: {
         allowNull: false,
@@ -54,6 +47,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('users');
+    await queryInterface.dropTable('platos');
   }
 };
