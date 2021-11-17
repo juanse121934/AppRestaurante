@@ -5,9 +5,8 @@ const cors = require('cors')
 //Importo morgan
 const morgan = require(`morgan`);
 
-const HomeRouter = require(`./Routes/Home`);
-const UsersRouter = require(`./Routes/Users`);
-const PostsRouter = require(`./Routes/Posts`);
+
+const Routes = require(`./Routes/Routes`)
 
 
 const app = express();
@@ -24,9 +23,8 @@ app.use(cors())
 app.use('/public', express.static(__dirname + '/../storage/imgs/'))
 
 // Rutas 
-app.use('/api', HomeRouter );
-app.use('/api/users', UsersRouter );
-app.use('/api/posts', PostsRouter );
+app.use('/', Routes );
+
 
 
 module.exports = app;

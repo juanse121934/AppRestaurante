@@ -1,6 +1,6 @@
-const Users = require('./UserController');
-const Home = require('./HomeController');
-const Posts = require('./PostsController');
+const Users = require('./User');
+const Home = require('./Home');
+const Posts = require('./Posts');
 
 
 module.exports = {
@@ -9,8 +9,11 @@ module.exports = {
     //** RUTAS USERS */
     register: Users.register,
     login: Users.login,
-    toListUsers: Users.toList,
+    toListAll: Users.toListAll,
     byIdUser: Users.byIdUser,
+    byUserPosts: Users.byUserPosts,
+    byUserPlatos: Users.byUserPlatos,
+    byUserPostres: Users.byUserPostres,
     updateUser: Users.updateUser,
     deleteUser: Users.deleteUser,
 
@@ -18,9 +21,11 @@ module.exports = {
     createPosts: Posts.create,
     toListPosts: Posts.allPosts,
     byIdPost: Posts.byIdPost,
+    byIdAutor: Posts.byIdAutor,
     updatePost: Posts.updatePost,
     deletePost: Posts.deletePost,
-    findPost: Posts.findPost,
+    //findPost: Posts.findPost,
+   
     
 }
 

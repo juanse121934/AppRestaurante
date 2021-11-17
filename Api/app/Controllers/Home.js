@@ -13,6 +13,7 @@ module.exports = {
           View_Users_get: {
             All: `http://localhost:4000/api/users`,
             By_Id: `http://localhost:4000/api/users/:id`,
+            By_Id_User_Posts_Crated: `http://localhost:4000/api/users/:id/posts`,
           },
           Update_User_patch: `http://localhost:4000/api/users/:id`,
           Delete_User_delet: `http://localhost:4000/api/users/:id`,
@@ -22,6 +23,7 @@ module.exports = {
           View_Posts: {
             All: `http://localhost:4000/api/posts`,
             By_Id: `http://localhost:4000/api/posts/:id`,
+            By_Author: `http://localhost:4000/api/posts/:id/autor`,
           },
           Update_Posts_patch: `http://localhost:4000/api/posts/:id`,
           Delete_Posts_delete: `http://localhost:4000/api/posts/:id`,

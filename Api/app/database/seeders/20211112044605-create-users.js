@@ -1,6 +1,6 @@
 'use strict';
 
-const { users } = require('../../models');
+
 const bcrypt = require('bcrypt');
 const auth = require('../../../config/auth')
 const faker = require(`faker`)

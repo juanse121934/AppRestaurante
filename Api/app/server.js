@@ -23,7 +23,7 @@ app.listen(PORT, () => {
     console.log(err);
   })
 
-  // sequelize.sync({ force: false })
+  // sequelize.sync({ force: true })
   //   .then(() => {
   //     console.log('Estoy conectado a la base de datos');
   //   })

@@ -15,12 +15,14 @@ const upload = require('../../libs/storage');
 
 
 //** RUTAS DE USUARIOS */
-router.get('/', Controller.toListUsers);
 router.post('/register', upload.single('image'), Controller.register);
 router.post('/login', Controller.login);
+router.get('/', Controller.toListAll);
 router.get('/:id', Controller.byIdUser);
-router.patch('/:id', auth, Polices.updateUser ,  Controller.updateUser);
-router.delete('/:id', auth, Polices.deleteUser,  Controller.deleteUser);
+router.get('/:id/posts', Controller.byUserPosts);
+router.get('/:id/platos', Controller.byUserPlatos);
+router.get('/:id/postres', Controller.byUserPostres);
+router.patch('/:id',   Controller.updateUser);
+// router.delete('/:id',  Controller.deleteUser);
 
 module.exports = router;
-
