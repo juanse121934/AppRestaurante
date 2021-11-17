@@ -6,13 +6,12 @@ const Home = () => {
     
     return (
         <div ClassName={styles.div}>
+            <div className={styles.inicio}>
+                <h1>AMA Y HORNEA</h1>
+                <button className={styles.boton}>COMPRAR AHORA</button>
+            </div>
             
-            <h1 className={styles.titulo}>
-                hello world
-                desde Home
-            </h1>
-            <input type="text" ></input>
-            <button className={styles.Button} >Buscar</button>
+           
 
         </div>
     )

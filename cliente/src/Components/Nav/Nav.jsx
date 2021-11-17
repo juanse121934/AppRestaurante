@@ -1,3 +1,5 @@
+import { faBell, faUtensils } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 import styles from "./Nav.module.css"
@@ -7,23 +9,27 @@ import styles from "./Nav.module.css"
 
 const Nav = () => {
 
-    const enlaces1 = [
-        { id: 1, titulo: 'Crear Receta', patch: '/recipes/create' },
-        { id: 2, titulo: 'Menú', patch: '/menu' }
-    ]
+  
 
     return (
         <div className={styles.nav}>
-            {
-                enlaces1.map(e => (
-                    <div ClassName={styles.navAct}>
-                        <div>
-                            <li className={styles.Li} key={e.id} >{e.titulo}</li>
-                        </div>
-                    </div>
-                ))
-            }
-
+               <nav className={styles.encabezado}>
+            <section class={styles.contenedor}>
+                <div class={styles.logo}>
+                   <FontAwesomeIcon icon={faUtensils}/>
+                  <hr />
+                </div>
+                <div class={styles.enlaces}>
+                    <a href="#">Inicio</a>
+                    <a href="#">Nuestra Historia</a>
+                    <a href="#">Servicios</a>
+                    <a href="#">Contacto</a>
+                    <a href="#">Ubicación</a>
+                </div>
+                
+            </section>
+        </nav>
+      
         </div>
     )
 }
